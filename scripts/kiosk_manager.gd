@@ -127,3 +127,11 @@ func _start_game():
 	audio_manager.play_sound(audio_manager.Sounds.START)
 	GameStarted.emit()
 	current_game_pid = OS.create_process(current_game.exe_path, [])
+
+func _notification(what: int) -> void:
+	match what:
+		Node.NOTIFICATION_APPLICATION_FOCUS_IN:
+			if current_game_pid != -1:
+				OS.kill(current_game_pid)
+				current_game_pid = -1
+			GameExited.emit()
