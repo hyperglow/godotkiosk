@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0yvykj35rd5c"]
+
+[ext_resource type="Script" uid="uid://bao433fkhfyra" path="res://scripts/selected_game.gd" id="1_w4e0m"]
+[ext_resource type="PackedScene" uid="uid://dwxstwlbb62em" path="res://scenes/dot_select.tscn" id="2_7d2se"]
+
+[node name="SelectedGame" type="HBoxContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w4e0m")
+
+[node name="dot_select" parent="." instance=ExtResource("2_7d2se")]
+layout_mode = 2
+
+[node name="dot_select2" parent="." instance=ExtResource("2_7d2se")]
+layout_mode = 2
+
+[node name="dot_select3" parent="." instance=ExtResource("2_7d2se")]
+layout_mode = 2
+
+[node name="dot_select4" parent="." instance=ExtResource("2_7d2se")]
+layout_mode = 2
+
+[node name="dot_select5" parent="." instance=ExtResource("2_7d2se")]
+layout_mode = 2
+
+[node name="dot_select6" parent="." instance=ExtResource("2_7d2se")]
+layout_mode = 2

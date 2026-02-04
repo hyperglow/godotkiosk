@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://bq7cu2asn5cvt"]
+
+[ext_resource type="Script" uid="uid://bjyad3sjvid7t" path="res://scripts/game_info.gd" id="1_wmavl"]
+
+[node name="GameInfo" type="HBoxContainer"]
+script = ExtResource("1_wmavl")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="GameTitle" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "very long and cool game name"
+uppercase = true
+
+[node name="GameYear" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "2025 / 2026"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="GameTagline" type="Label" parent="VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Awsome tagline of the game"
+uppercase = true
+
+[node name="GameAuthors" type="Label" parent="VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "THomas Happy, emma joystick, John game"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Control3" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4

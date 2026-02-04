@@ -1,0 +1,23 @@
+[gd_scene load_steps=7 format=3 uid="uid://srval5xwblc6"]
+
+[ext_resource type="Script" uid="uid://btbdt4agy78pr" path="res://scripts/audio_manager.gd" id="1_hux41"]
+[ext_resource type="AudioStream" uid="uid://cc0h3c4sbqlua" path="res://assets/sounds/boot.wav" id="2_3dgps"]
+[ext_resource type="AudioStream" uid="uid://k45gc8mht2o7" path="res://assets/sounds/scroll.wav" id="3_151wy"]
+[ext_resource type="AudioStream" uid="uid://bu02eghmb6w6c" path="res://assets/sounds/start.wav" id="4_qb6qo"]
+[ext_resource type="AudioStream" uid="uid://duo2mvj707il7" path="res://assets/sounds/5 now THIS is a map.ogg" id="5_151wy"]
+
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_4o3pv"]
+
+[node name="AudioManager" type="AudioStreamPlayer"]
+stream = SubResource("AudioStreamPolyphonic_4o3pv")
+volume_db = -10.0
+script = ExtResource("1_hux41")
+sound_files = Dictionary[int, AudioStream]({
+0: ExtResource("2_3dgps"),
+1: ExtResource("3_151wy"),
+2: ExtResource("4_qb6qo")
+})
+
+[node name="BgMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_151wy")
+volume_db = -10.0

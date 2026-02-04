@@ -1,0 +1,30 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://8tdgiq1alr4b"]
+
+[sub_resource type="Gradient" id="Gradient_lu2tf"]
+colors = PackedColorArray(0, 0, 0, 1, 0.2467097, 0.45763397, 0.7800463, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u0k5q"]
+gradient = SubResource("Gradient_lu2tf")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_a23tl"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o8noh"]
+gradient = SubResource("Gradient_a23tl")
+fill_to = Vector2(0, 1)
+
+[resource]
+resource_name = "glow"
+cull_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = SubResource("GradientTexture2D_u0k5q")
+metallic = 0.02
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(0.7943987, 2.2621452e-06, 0, 1)
+emission_energy_multiplier = 10.75
+emission_operator = 1
+emission_texture = SubResource("GradientTexture2D_o8noh")
+rim = 0.0

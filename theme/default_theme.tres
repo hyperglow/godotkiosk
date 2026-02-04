@@ -1,0 +1,26 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://du1q5wkegiyis"]
+
+[ext_resource type="FontFile" uid="uid://on3mruwghklw" path="res://assets/fonts/Good Old DOS.ttf" id="1_ag65a"]
+[ext_resource type="Texture2D" uid="uid://coicm8tivjoga" path="res://assets/interface/panel-all.png" id="2_0ref1"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xul1n"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("2_0ref1")
+texture_margin_left = 64.0
+texture_margin_top = 64.0
+texture_margin_right = 64.0
+texture_margin_bottom = 64.0
+
+[resource]
+HBoxContainer/constants/separation = 20
+Label/font_sizes/font_size = 40
+Label/fonts/font = ExtResource("1_ag65a")
+MarginContainer/constants/margin_bottom = 50
+MarginContainer/constants/margin_left = 50
+MarginContainer/constants/margin_right = 50
+MarginContainer/constants/margin_top = 50
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_xul1n")
+VBoxContainer/constants/separation = 30

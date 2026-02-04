@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://xn3xcso44yqk"]
+
+[ext_resource type="Texture2D" uid="uid://bd04ksli8sqp" path="res://games/game_001/icon.webp" id="1_w2qs2"]
+
+[resource]
+resource_local_to_scene = true
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_w2qs2")

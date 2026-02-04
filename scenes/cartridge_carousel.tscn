@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdlt7jmwrtaby"]
+
+[ext_resource type="Script" uid="uid://chsvkrh7hcg2j" path="res://scripts/cartridge_carousel.gd" id="1_rs5rv"]
+
+[sub_resource type="Curve3D" id="Curve3D_e3bpw"]
+_data = {
+"points": PackedVector3Array(-1, 0, -1, 1, 0, 1, -4.088622, 0, -2.1305604, -1.2, 0, 0, 1.2, 0, 0, 0.022651672, 0, 1.5292912, -1, 0, 1, 1, 0, -1, 4.0496535, 0, -2.1529064),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[node name="CartridgeCarousel" type="Node3D"]
+script = ExtResource("1_rs5rv")
+
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, -0.7463894)
+curve = SubResource("Curve3D_e3bpw")

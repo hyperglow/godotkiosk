@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://by07464bdsm80"]
+
+[resource]
+cull_mode = 1
+diffuse_mode = 3
+specular_mode = 2
+emission_enabled = true
+emission = Color(0.38469914, 0.99999994, 0.9429243, 1)
+emission_energy_multiplier = 14.16
+grow = true
+grow_amount = 0.002

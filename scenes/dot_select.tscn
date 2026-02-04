@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwxstwlbb62em"]
+
+[ext_resource type="Texture2D" uid="uid://8sfh75o6mm0u" path="res://assets/interface/checkbox_unchecked.png" id="1_hyy2e"]
+
+[node name="dot_select" type="TextureRect"]
+texture_filter = 1
+custom_minimum_size = Vector2(29, 29)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.5
+offset_top = -14.5
+offset_right = 14.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_hyy2e")
