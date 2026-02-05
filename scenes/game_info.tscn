@@ -2,54 +2,103 @@
 
 [ext_resource type="Script" uid="uid://bjyad3sjvid7t" path="res://scripts/game_info.gd" id="1_wmavl"]
 
-[node name="GameInfo" type="HBoxContainer"]
+[node name="InfoContainer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_wmavl")
 
-[node name="Control" type="Control" parent="."]
+[node name="GameInfo" type="HBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -799.0
+offset_top = -55.0
+offset_right = 799.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="GameInfo"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameInfo"]
 layout_mode = 2
 alignment = 1
 
-[node name="GameTitle" type="Label" parent="VBoxContainer"]
+[node name="GameTitle" type="Label" parent="GameInfo/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
 text = "very long and cool game name"
 uppercase = true
 
-[node name="GameYear" type="Label" parent="VBoxContainer"]
+[node name="GameYear" type="Label" parent="GameInfo/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "2025 / 2026"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="Control2" type="Control" parent="."]
+[node name="Control2" type="Control" parent="GameInfo"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+[node name="VBoxContainer2" type="VBoxContainer" parent="GameInfo"]
 layout_mode = 2
 alignment = 1
 
-[node name="GameTagline" type="Label" parent="VBoxContainer2"]
+[node name="GameTagline" type="Label" parent="GameInfo/VBoxContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Awsome tagline of the game"
 uppercase = true
 
-[node name="GameAuthors" type="Label" parent="VBoxContainer2"]
+[node name="GameAuthors" type="Label" parent="GameInfo/VBoxContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "THomas Happy, emma joystick, John game"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="Control3" type="Control" parent="."]
+[node name="Control3" type="Control" parent="GameInfo"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+
+[node name="TrailerHint" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HintPressKey" type="Label" parent="TrailerHint"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "PRESS ANY KEY"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="YearHint" type="Label" parent="TrailerHint"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Multimedia | VR-Design - Game Design 2025/2026"
+horizontal_alignment = 1
+uppercase = true

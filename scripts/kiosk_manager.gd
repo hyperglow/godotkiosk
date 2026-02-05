@@ -3,8 +3,11 @@ extends Node
 signal GameIndexChanged(new_index: int, added : bool)
 signal GameStarted()
 signal GameExited()
+signal TrailerStart()
+signal TrailerExit()
 
 const debug_data := false
+const trailer_delay := 30.0
 var games : Array[GameData] = []
 var carousel : CartridgeCarousel
 var current_game_index := 0:
@@ -22,8 +25,18 @@ var games_directory: String
 var current_game_pid: int = -1
 var audio_manager : AudioManager
 var audio_manager_scene : PackedScene = preload("res://scenes/AudioManager.tscn")
+var in_trailer : bool = false:
+	set(value):
+		if value != in_trailer:
+			in_trailer = value
+			if value:
+				TrailerStart.emit()
+			else:
+				TrailerExit.emit()
+var time_since_input := 0.0
 
 func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	if OS.has_feature("editor"):
 		games_directory = ProjectSettings.globalize_path("res://games/")
 	else:
@@ -86,12 +99,25 @@ func _populate_test_data():
 	for i in range(7):
 		games.push_back(fake_game)
 
-func _input(event: InputEvent) -> void:
-	if event.is_echo(): return
-	
+func _process(delta: float) -> void:
 	# Fail safe kiosk exit command
-	if event.is_action_pressed("game_quit") and event.is_action_pressed("ui_up") and event.is_action_pressed("game_menu"):
+	if Input.is_action_pressed("game_quit") and Input.is_action_pressed("joy_up") and Input.is_action_pressed("game_menu"):
+		print("quiting kiosk")
 		get_tree().quit()
+
+	if game_running or in_trailer:
+		return
+	time_since_input += delta
+	if time_since_input >= trailer_delay:
+		in_trailer = true
+
+func _input(event: InputEvent) -> void:
+	time_since_input = 0.0
+	# Exit trailer if input
+	if in_trailer and not game_running:
+		in_trailer = false
+		return
+	if event.is_echo(): return
 
 	if event.is_action_pressed("game_quit"):
 		_quit_game()
@@ -126,7 +152,7 @@ func _start_game():
 		return
 	audio_manager.play_sound(audio_manager.Sounds.START)
 	GameStarted.emit()
-	current_game_pid = OS.create_process(current_game.exe_path, [])
+	current_game_pid = OS.create_process(current_game.exe_path, ["--fullscreen"])
 
 func _notification(what: int) -> void:
 	match what:

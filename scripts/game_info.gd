@@ -1,15 +1,21 @@
-extends HBoxContainer
+extends Control
 
-@onready var title_label : Label = $VBoxContainer/GameTitle
-@onready var year_label : Label = $VBoxContainer/GameYear
-@onready var authors_label : Label = $VBoxContainer2/GameAuthors
-@onready var tagline_label : Label = $VBoxContainer2/GameTagline
+@onready var title_label : Label = $GameInfo/VBoxContainer/GameTitle
+@onready var year_label : Label = $GameInfo/VBoxContainer/GameYear
+@onready var authors_label : Label = $GameInfo/VBoxContainer2/GameAuthors
+@onready var tagline_label : Label = $GameInfo/VBoxContainer2/GameTagline
+
+@onready var game_info : Control = $GameInfo
+@onready var trailer_hint : Control = $TrailerHint
 
 var _tweens : Dictionary[Label, Tween] = {}
 
 func _ready() -> void:
 	KioskManager.GameIndexChanged.connect(func(_a: int, _b: bool): _display_game_info())
+	KioskManager.TrailerStart.connect(func(): _switch_type(true))
+	KioskManager.TrailerExit.connect(func(): _switch_type(false))
 	_display_game_info()
+	_switch_type(false)
 
 func _display_game_info():
 	var data := KioskManager.games[KioskManager.current_game_index]
@@ -41,3 +47,7 @@ func typewriter_animation(label: Label, text: String):
 func _write(label: Label, letters: Array[String]):
 	var current_count = label.text.length()
 	label.text = label.text + letters[current_count]
+
+func _switch_type(trailer := false):
+	game_info.visible = not trailer
+	trailer_hint.visible = trailer

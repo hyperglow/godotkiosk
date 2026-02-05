@@ -1,6 +1,7 @@
-[gd_scene load_steps=29 format=3 uid="uid://cjd7dooasjaqi"]
+[gd_scene load_steps=30 format=3 uid="uid://cjd7dooasjaqi"]
 
 [ext_resource type="PackedScene" uid="uid://cau2u8pgknkvr" path="res://assets/models/arcade.blend" id="1_0wfyh"]
+[ext_resource type="Script" uid="uid://cvie10vg8xnwh" path="res://scripts/top_container.gd" id="2_jbj1t"]
 [ext_resource type="Shader" uid="uid://bu2rm0nnlyslq" path="res://shaders/crt.gdshader" id="4_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://cvxbogxblb10f" path="res://assets/interface/arcade_logo.png" id="4_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://crakmhkxyo0v4" path="res://assets/buttons/switch_buttons_down_outline.png" id="5_tipki"]
@@ -312,6 +313,7 @@ grow_vertical = 2
 custom_minimum_size = Vector2(0, 146)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_choun")
+script = ExtResource("2_jbj1t")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/ContainerTop"]
 layout_mode = 2
@@ -391,15 +393,16 @@ size_flags_vertical = 4
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/MarginContainer"]
+[node name="Center" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("9_trceg")
 
-[node name="Control" type="Control" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="GameCartHint" type="Control" parent="CanvasLayer/VBoxContainer/MarginContainer/Center"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SelectedGame" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/Control" instance=ExtResource("5_ya4ey")]
+[node name="SelectedGame" parent="CanvasLayer/VBoxContainer/MarginContainer/Center/GameCartHint" instance=ExtResource("5_ya4ey")]
 layout_mode = 1
 anchors_preset = 7
 anchor_top = 1.0
@@ -410,7 +413,7 @@ offset_right = 137.0
 offset_bottom = 0.0
 grow_vertical = 0
 
-[node name="GameSelectArrow" type="TextureRect" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/Control"]
+[node name="GameSelectArrow" type="TextureRect" parent="CanvasLayer/VBoxContainer/MarginContainer/Center/GameCartHint"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -422,35 +425,25 @@ grow_horizontal = 2
 texture = ExtResource("6_trceg")
 stretch_mode = 5
 
-[node name="VideoContainer" type="Control" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="VideoContainer" type="AspectRatioContainer" parent="CanvasLayer/VBoxContainer/MarginContainer/Center"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+ratio = 1.77
 
-[node name="Panel" type="Panel" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VideoContainer"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Panel" type="Panel" parent="CanvasLayer/VBoxContainer/MarginContainer/Center/VideoContainer"]
+layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_a8y0u")
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VideoContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/VBoxContainer/MarginContainer/Center/VideoContainer"]
 clip_children = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 
-[node name="GameVideo" type="VideoStreamPlayer" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VideoContainer/PanelContainer"]
+[node name="GameVideo" type="VideoStreamPlayer" parent="CanvasLayer/VBoxContainer/MarginContainer/Center/VideoContainer/PanelContainer"]
 layout_mode = 2
 stream = ExtResource("8_eb6dy")
 expand = true
 loop = true
-script = ExtResource("9_trceg")
 
 [node name="Center" type="Control" parent="CanvasLayer/VBoxContainer"]
 visible = false
@@ -518,5 +511,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.175, 0.025, -0.442)
 libraries = {
 &"": SubResource("AnimationLibrary_jbj1t")
 }
+
+[connection signal="finished" from="CanvasLayer/VBoxContainer/MarginContainer/Center/VideoContainer/PanelContainer/GameVideo" to="CanvasLayer/VBoxContainer/MarginContainer/Center" method="_on_game_video_finished"]
 
 [editable path="SubViewportContainer/SubViewport/arcade"]

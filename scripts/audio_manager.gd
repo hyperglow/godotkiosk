@@ -21,7 +21,8 @@ func _ready() -> void:
 	bg_music.play(0.0)
 	KioskManager.GameStarted.connect(func(): bg_music.stop())
 	KioskManager.GameExited.connect(func(): bg_music.play())
-
+	KioskManager.TrailerStart.connect(func(): bg_music.stop())
+	KioskManager.TrailerExit.connect(func(): bg_music.play())
 
 func _notification(what: int) -> void:
 	match what:
