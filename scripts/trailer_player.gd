@@ -57,5 +57,6 @@ func _game_start():
 	visible = false
 
 func _game_exit():
-	video.paused = true
+	video.play()
+	video.paused = false
 	visible = true
