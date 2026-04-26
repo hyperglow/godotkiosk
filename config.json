@@ -1,0 +1,4 @@
+{
+	"esp_port": "/dev/ttyUSB0",
+	"trailer_delay": 30.0
+}

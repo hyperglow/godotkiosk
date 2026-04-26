@@ -7,7 +7,6 @@ signal TrailerStart()
 signal TrailerExit()
 
 const debug_data := false
-const trailer_delay := 30.0
 var games : Array[GameData] = []
 var carousel : CartridgeCarousel
 var current_game_index := 0:
@@ -22,6 +21,7 @@ var game_running:
 			return false
 		return OS.is_process_running(current_game_pid)
 var games_directory: String
+var config_directory: String
 var current_game_pid: int = -1
 var audio_manager : AudioManager
 var audio_manager_scene : PackedScene = preload("res://scenes/AudioManager.tscn")
@@ -34,36 +34,68 @@ var in_trailer : bool = false:
 			else:
 				TrailerExit.emit()
 var time_since_input := 0.0
+var serial_manager: SerialManager
+
+## Settings
+var trailer_delay := 30.0
+var esp_port := ""
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	if OS.has_feature("editor"):
 		games_directory = ProjectSettings.globalize_path("res://games/")
+		config_directory = ProjectSettings.globalize_path("res://config.json")
 	else:
 		games_directory = OS.get_executable_path().get_base_dir().path_join("games/")
+		config_directory = OS.get_executable_path().get_base_dir().path_join("config.json")
 
+	_load_config()
 	audio_manager = audio_manager_scene.instantiate()
 	add_child(audio_manager)
+	serial_manager = SerialManager.new()
+	serial_manager.turnOnLight(0)
+	get_tree().set_auto_accept_quit(false)
 
 	if debug_data:
 		_populate_test_data()
 	else:
 		_scan_directory()
 
-# TODO: create game loading function
+func _load_config():
+	print("Loading config file at", config_directory)
+	if not FileAccess.file_exists(config_directory):
+		var config_json = FileAccess.open(config_directory, FileAccess.WRITE)
+		print("No config file found, creating default.")
+		var settings_dic : Dictionary = {trailer_delay = trailer_delay, esp_port = esp_port}
+		config_json.store_string(JSON.stringify(settings_dic, "\t"))
+		config_json.close()
+	else:
+		var config_json := FileAccess.open(config_directory, FileAccess.READ)
+		if not config_json:
+			print("Failed to open config file")
+			return
+		var config_text : String = config_json.get_as_text()
+		print("Config file found, reading")
+		var json = JSON.new()
+		print("Config text", config_text)
+		var result = json.parse(config_text)
+		if result != OK:
+			print("Error reading config file")
+			return
+		var settings_dic : Dictionary = json.data
+		trailer_delay = settings_dic["trailer_delay"]
+		esp_port = settings_dic["esp_port"]
+		config_json.close()
+	print("Config loaded with values:")
+	print("Trailer_delay", trailer_delay)
+	print("Esp_port", esp_port)
+
 func _scan_directory():
 	var dir := DirAccess.open(games_directory)
 	var game_dirs := dir.get_directories()
 	for game_dir in game_dirs:
 		var full_path = games_directory.path_join(game_dir)
 		_scan_game(full_path)
-	# if dir:
-	# 	dir.list_dir_begin()
-	# 	var item_name := dir.get_next()
-	# 	while item_name != "":
-	# 		var full_path := games_directory.path_join(item_name)
-	# 		if dir.current_is_dir() and item_name != "." and item_name != "..":
-	# 			_scan_game(full_path, item_name)
 				
 func _scan_game(path : String):
 	var dir := DirAccess.open(path)
@@ -146,6 +178,13 @@ func _quit_game():
 	DisplayServer.window_move_to_foreground()
 	GameExited.emit()
 
+func _quit_kiosk():
+	if game_running:
+		OS.kill(current_game_pid)
+	if serial_manager:
+		print("Sending quit notify to esp")
+		serial_manager.notifyQuit()
+
 func _start_game():
 	print("Starting game:" + current_game.name)
 	if game_running:
@@ -154,6 +193,9 @@ func _start_game():
 	GameStarted.emit()
 	current_game_pid = OS.create_process(current_game.exe_path, ["--fullscreen"])
 
+func _exit_tree() -> void:
+	_quit_kiosk()
+
 func _notification(what: int) -> void:
 	match what:
 		Node.NOTIFICATION_APPLICATION_FOCUS_IN:
@@ -161,3 +203,5 @@ func _notification(what: int) -> void:
 				OS.kill(current_game_pid)
 				current_game_pid = -1
 			GameExited.emit()
+		Node.NOTIFICATION_WM_CLOSE_REQUEST:
+			_quit_kiosk()
