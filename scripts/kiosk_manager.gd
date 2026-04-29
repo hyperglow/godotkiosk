@@ -205,3 +205,4 @@ func _notification(what: int) -> void:
 			GameExited.emit()
 		Node.NOTIFICATION_WM_CLOSE_REQUEST:
 			_quit_kiosk()
+			get_tree().quit()

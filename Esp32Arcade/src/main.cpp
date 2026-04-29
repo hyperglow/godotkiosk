@@ -48,10 +48,12 @@ void loop()
       if (incoming.endsWith("START"))
       {
         trailer = true;
+        digitalWrite(ledPins[lightIndex], LOW);
       }
       if (incoming.endsWith("END"))
       {
         trailer = false;
+        SetLight(lightIndex);
       }
     }
     if (incoming.startsWith("OFF"))
@@ -64,15 +66,15 @@ void loop()
     Serial.print("I received: ");
     Serial.println(incoming);
   }
-  if (trailer)
+  if (trailer == true)
   {
     int nextLightIndex = (loopIndex + 1) % (sizeof(ledPins) / (sizeof(int)));
     digitalWrite(ledPins[nextLightIndex], HIGH);
-    digitalWrite(ledPins[lightIndex], LOW);
-    delay(500);
-    lightIndex = nextLightIndex;
+    digitalWrite(ledPins[loopIndex], LOW);
+    loopIndex = nextLightIndex;
+    delay(1400);
   }
-  if (lightIndex == -1)
+  if (lightIndex == -1 && !trailer)
   {
     loopIndex = (loopIndex + 1) % 4;
     switch (loopIndex)
